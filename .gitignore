@@ -1,0 +1,6 @@
+nbproject/private
+*~
+composer.lock
+vendor
+.idea/*
+!.idea/runConfigurations

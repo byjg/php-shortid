@@ -23,6 +23,7 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(81717788171667188198);
 
 - fromNumber($number, $map = null): Return a short id from a number
 - fromHex($hex, $map = null): Return a short id from a Hex value
+- get($shortid, $map = null): Return the Unique Integer Number from the short id
 
 ## Specify your own map:
 

@@ -24,6 +24,17 @@ class ShortIdTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @dataProvider dataProviderNumber
+     */
+    public function testGetFromShortId($from, $expected)
+    {
+        $this->assertEquals(
+            $expected,
+            ShortId::get($from)
+        );
+    }
+
+    /**
      * @dataProvider dataProviderHex
      */
     public function testFromHex($expected, $from)

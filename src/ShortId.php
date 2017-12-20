@@ -52,4 +52,22 @@ class ShortId
 
         return self::fromNumber($number, $map);
     }
+
+    public static function get($shortid, $map = null)
+    {
+        if (empty($map)) {
+            $map = ShortId::$MAP_DEFAULT;
+        }
+
+        $base = strlen($map);
+        $order = 1;
+        $result = 0;
+
+        for ($pos = 0; $pos < strlen($shortid); $pos++) {
+            $result += intval(strpos($map, $shortid[$pos])) * $order;
+            $order *= $base;
+        }
+
+        return $result;
+    }
 }

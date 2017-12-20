@@ -22,6 +22,11 @@ class ShortId
         . "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     ;
 
+    public static $MAP_RANDOM =
+        "WPyHLMtE74KjUQvBqoS652uADF"
+        . "gZibO9RdznT1YIVsXwfkaxCNpr"
+        . "J3chmel0G8";
+
     public static function fromNumber($number, $map = null)
     {
         if (empty($map)) {

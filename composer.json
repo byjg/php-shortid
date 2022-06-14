@@ -2,12 +2,6 @@
     "name": "byjg/shortid",
     "description": "Create short string IDs from numbers",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Joao Gilberto Magalhães",
-            "email": "joao@byjg.com.br"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "ByJG\\Utils\\": "src/"

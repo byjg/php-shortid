@@ -1,5 +1,7 @@
 language: php
 php:
+  - "7.3"
+  - "7.2"
   - "7.1"
   - "7.0"
   - "5.6"
@@ -8,5 +10,5 @@ install:
   - composer install
 
 script: 
-  - phpunit
+  - vendor/bin/phpunit
 

@@ -1,11 +1,11 @@
 # ShortID PHP
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/byjg/shortid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/byjg/shortid/?branch=master)
-[![Build Status](https://travis-ci.org/byjg/shortid.svg?branch=master)](https://travis-ci.org/byjg/shortid)
+[![Build Status](https://travis-ci.com/byjg/shortid.svg?branch=master)](https://travis-ci.com/byjg/shortid)
 
 Create short string IDs from numbers
 
-# Description
+## Description
 
 This library enable you create a very short string from
 integer numbers
@@ -19,13 +19,15 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(81717788171667188198);
 // Will write: Qi0yuM2uKwJb
 ```
 
-# Methods:
+## Methods
 
 - fromNumber($number, $map = null): Return a short id from a number
 - fromHex($hex, $map = null): Return a short id from a Hex value
-- get($shortid, $map = null): Return the Unique Integer Number from the short id
+- fromUuid($uuid, $map = null): Return a short id from a UUID
+- fromRandom($min, $max, $map = null): Return a short id from a random number
+- get($shortid, $map = null): Return the Unique Integer Number from the short id (does not work with UUIDs)
 
-# Specify your own map:
+## Specify your own map
 
 The base of the short id is in the map definition.
 
@@ -50,14 +52,14 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(
 // Will write: G8QokCSkAmz1
 ```
 
-# Installation
+## Installation
 
 ```php
 composer require "byjg/shortid=1.0.*"
 ```
-# Tests
+
+## Tests
 
 ```php
-phpunit
+vendor/bin/phpunit
 ```
-

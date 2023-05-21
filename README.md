@@ -7,8 +7,8 @@ Create short string IDs from numbers
 
 ## Description
 
-This library enable you create a very short string from
-integer numbers
+This library enables you to create a very short string from
+integer numbers.
 
 The basic usage is:
 
@@ -31,7 +31,7 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(81717788171667188198);
 
 The base of the short id is in the map definition.
 
-Basically you can create your own sequence here.
+Basically, you can create your own sequence here.
 
 The library defines four by default:
 

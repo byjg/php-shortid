@@ -3,13 +3,9 @@
 namespace Tests;
 
 use ByJG\Utils\ShortId;
+use PHPUnit\Framework\TestCase;
 
-// backward compatibility
-if (!class_exists('\PHPUnit\Framework\TestCase')) {
-    class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');
-}
-
-class ShortIdTest extends \PHPUnit\Framework\TestCase
+class ShortIdTest extends TestCase
 {
 
     /**
@@ -71,8 +67,11 @@ class ShortIdTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    // public function testFromHex()
-    // {
-    //
-    // }
+    public function testFromUuid()
+    {
+        ShortId::fromRandom();  // Just run to see if it works
+
+        $this->assertEquals('a2BU6bLxLieeALmbPW3QuK', ShortId::fromUuid('092395A6-BC87-11ED-8CA9-0242AC120002'));
+        $this->assertEquals('OKgJdeLxLieeALmbPW3QuK', ShortId::fromUuid('092609DD-BC87-11ED-8CA9-0242AC120002'));
+    }
 }

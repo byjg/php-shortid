@@ -53,6 +53,26 @@ class ShortId
         return self::fromNumber($number, $map);
     }
 
+    public static function fromUuid($hex, $map = null)
+    {
+        $numbers = unpack('L*', pack('h*', str_replace('-', '', $hex)));
+
+        $result = "";
+
+        foreach ($numbers as $number) {
+            $result .= self::fromNumber($number, $map);
+        }
+
+        return $result;
+    }
+
+    public static function fromRandom($min = 2147483647, $max = 9223372036854775807, $map = null)
+    {
+        $number = rand($min, $max);
+
+        return self::fromNumber($number, $map);
+    }
+
     public static function get($shortid, $map = null)
     {
         if (empty($map)) {

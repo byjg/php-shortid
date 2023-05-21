@@ -70,7 +70,7 @@ class ShortIdTest extends TestCase
     public function testFromUuid()
     {
         ShortId::fromRandom();  // Just run to see if it works
-        
+
         $this->assertEquals('a2BU6bLxLieeALmbPW3QuK', ShortId::fromUuid('092395A6-BC87-11ED-8CA9-0242AC120002'));
         $this->assertEquals('OKgJdeLxLieeALmbPW3QuK', ShortId::fromUuid('092609DD-BC87-11ED-8CA9-0242AC120002'));
     }

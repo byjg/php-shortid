@@ -1,7 +1,10 @@
 # ShortID PHP
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/byjg/shortid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/byjg/shortid/?branch=master)
-[![Build Status](https://travis-ci.com/byjg/shortid.svg?branch=master)](https://travis-ci.com/byjg/shortid)
+[![Build Status](https://github.com/byjg/shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/shortid/actions/workflows/phpunit.yml)
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/shortid/)
+[![GitHub license](https://img.shields.io/github/license/byjg/shortid.svg)](https://opensource.byjg.com/opensource/licensing.html)
+[![GitHub release](https://img.shields.io/github/release/byjg/shortid.svg)](https://github.com/byjg/shortid/releases/)
 
 Create short string IDs from numbers
 
@@ -55,7 +58,7 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(
 ## Installation
 
 ```php
-composer require "byjg/shortid=1.0.*"
+composer require "byjg/shortid=4.9.*"
 ```
 
 ## Tests
@@ -63,3 +66,6 @@ composer require "byjg/shortid=1.0.*"
 ```php
 vendor/bin/phpunit
 ```
+
+----
+[Open source ByJG](http://opensource.byjg.com)

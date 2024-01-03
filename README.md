@@ -67,5 +67,12 @@ composer require "byjg/shortid=4.9.*"
 vendor/bin/phpunit
 ```
 
+## Dependencies
+
+```mermaid  
+flowchart TD  
+    byjg/shortid  
+```
+
 ----
 [Open source ByJG](http://opensource.byjg.com)

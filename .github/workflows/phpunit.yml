@@ -31,4 +31,4 @@ jobs:
     uses: byjg/byjg.github.io/.github/workflows/add_doc.yaml@master
     with:
       folder: php
-      project: shortid
+      project: ${{ github.event.repository.name }}

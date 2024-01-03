@@ -28,7 +28,7 @@ jobs:
   Documentation:
     if: github.ref == 'refs/heads/master'
     needs: Build
-    uses: byjg/byjg.github.io/.github/workflows/add_doc.yaml@master
+    uses: byjg/byjg.github.io/.github/workflows/add-doc.yaml@master
     with:
       folder: php
       project: ${{ github.event.repository.name }}

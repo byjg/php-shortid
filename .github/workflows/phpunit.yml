@@ -34,3 +34,4 @@ jobs:
     with:
       folder: php
       project: ${{ github.event.repository.name }}
+    secrets: inherit

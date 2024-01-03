@@ -71,7 +71,7 @@ vendor/bin/phpunit
 
 ```mermaid  
 flowchart TD  
-    byjg/php-shortid  
+    byjg/shortid  
 ```
 
 ----

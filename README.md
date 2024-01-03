@@ -1,10 +1,10 @@
 # ShortID PHP
 
-[![Build Status](https://github.com/byjg/shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/shortid/actions/workflows/phpunit.yml)
+[![Build Status](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
-[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/shortid/)
-[![GitHub license](https://img.shields.io/github/license/byjg/shortid.svg)](https://opensource.byjg.com/opensource/licensing.html)
-[![GitHub release](https://img.shields.io/github/release/byjg/shortid.svg)](https://github.com/byjg/shortid/releases/)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-shortid/)
+[![GitHub license](https://img.shields.io/github/license/byjg/php-shortid.svg)](https://opensource.byjg.com/opensource/licensing.html)
+[![GitHub release](https://img.shields.io/github/release/byjg/php-shortid.svg)](https://github.com/byjg/php-shortid/releases/)
 
 Create short string IDs from numbers
 
@@ -58,7 +58,7 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(
 ## Installation
 
 ```php
-composer require "byjg/shortid=4.9.*"
+composer require "byjg/php-shortid=4.9.*"
 ```
 
 ## Tests
@@ -71,7 +71,7 @@ vendor/bin/phpunit
 
 ```mermaid  
 flowchart TD  
-    byjg/shortid  
+    byjg/php-shortid  
 ```
 
 ----

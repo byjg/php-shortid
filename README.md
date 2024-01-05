@@ -1,4 +1,4 @@
-# ShortID PHP
+# ShortID
 
 [![Build Status](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
@@ -58,7 +58,7 @@ $shortid = \ByJG\Utils\ShortId::fromNumber(
 ## Installation
 
 ```php
-composer require "byjg/php-shortid=4.9.*"
+composer require "byjg/php-shortid"
 ```
 
 ## Tests

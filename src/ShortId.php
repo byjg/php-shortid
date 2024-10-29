@@ -1,33 +1,33 @@
 <?php
 
-namespace ByJG\Utils;
+namespace ByJG\ShortId;
 
 class ShortId
 {
-    public static $MAP_DEFAULT =
+    public static string $MAP_DEFAULT =
         "abcdefghijklmnopqrstuvwxyz"
         . "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         . "0123456789"
     ;
 
-    public static $MAP_ALTERNATE =
+    public static string $MAP_ALTERNATE =
         "abcdefghijklmnopqrstuvwxyz"
         . "0123456789"
         . "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     ;
 
-    public static $MAP_NUMBERS_FIRST =
+    public static string $MAP_NUMBERS_FIRST =
         "0123456789"
         . "abcdefghijklmnopqrstuvwxyz"
         . "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     ;
 
-    public static $MAP_RANDOM =
+    public static string $MAP_RANDOM =
         "WPyHLMtE74KjUQvBqoS652uADF"
         . "gZibO9RdznT1YIVsXwfkaxCNpr"
         . "J3chmel0G8";
 
-    public static function fromNumber($number, $map = null)
+    public static function fromNumber(int $number, string $map = null): string
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;
@@ -46,14 +46,14 @@ class ShortId
         return $result;
     }
 
-    public static function fromHex($hex, $map = null)
+    public static function fromHex(string $hex, string $map = null): string
     {
         $number = hexdec(str_replace('-', '', $hex));
 
         return self::fromNumber($number, $map);
     }
 
-    public static function fromUuid($hex, $map = null)
+    public static function fromUuid(string $hex, string $map = null): string
     {
         $numbers = unpack('L*', pack('h*', str_replace('-', '', $hex)));
 
@@ -66,14 +66,14 @@ class ShortId
         return $result;
     }
 
-    public static function fromRandom($min = 2147483647, $max = 9223372036854775807, $map = null)
+    public static function fromRandom(int $min = 2147483647, int $max = 9223372036854775807, string $map = null): string
     {
         $number = rand($min, $max);
 
         return self::fromNumber($number, $map);
     }
 
-    public static function get($shortid, $map = null)
+    public static function get(string $shortId, string $map = null): float|int
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;
@@ -83,8 +83,8 @@ class ShortId
         $order = 1;
         $result = 0;
 
-        for ($pos = 0; $pos < strlen($shortid); $pos++) {
-            $result += intval(strpos($map, $shortid[$pos])) * $order;
+        for ($pos = 0; $pos < strlen($shortId); $pos++) {
+            $result += intval(strpos($map, $shortId[$pos])) * $order;
             $order *= $base;
         }
 

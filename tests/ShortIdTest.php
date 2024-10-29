@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use ByJG\Utils\ShortId;
+use ByJG\ShortId\ShortId;
 use PHPUnit\Framework\TestCase;
 
 class ShortIdTest extends TestCase

@@ -3,14 +3,13 @@
 namespace Tests;
 
 use ByJG\ShortId\ShortId;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ShortIdTest extends TestCase
 {
 
-    /**
-     * @dataProvider dataProviderNumber
-     */
+    #[DataProvider('dataProviderNumber')]
     public function testFromNumber($expected, $from)
     {
         $this->assertEquals(
@@ -19,9 +18,7 @@ class ShortIdTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderNumber
-     */
+    #[DataProvider('dataProviderNumber')]
     public function testGetFromShortId($from, $expected)
     {
         $this->assertEquals(
@@ -30,9 +27,7 @@ class ShortIdTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderHex
-     */
+    #[DataProvider('dataProviderHex')]
     public function testFromHex($expected, $from)
     {
         $this->assertEquals(
@@ -41,7 +36,7 @@ class ShortIdTest extends TestCase
         );
     }
 
-    public function dataProviderNumber()
+    public static function dataProviderNumber()
     {
         return [
             ['a', 0],
@@ -54,7 +49,7 @@ class ShortIdTest extends TestCase
         ];
     }
 
-    public function dataProviderHex()
+    public static function dataProviderHex()
     {
         return [
             ['a', '0'],

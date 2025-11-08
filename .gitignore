@@ -5,3 +5,6 @@ vendor
 .idea/*
 !.idea/runConfigurations
 .phpunit.result.cache
+phpunit.coverage.xml
+phpunit.report.xml
+*.bak

@@ -69,4 +69,58 @@ class ShortIdTest extends TestCase
         $this->assertEquals('a2BU6bLxLieeALmbPW3QuK', ShortId::fromUuid('092395A6-BC87-11ED-8CA9-0242AC120002'));
         $this->assertEquals('OKgJdeLxLieeALmbPW3QuK', ShortId::fromUuid('092609DD-BC87-11ED-8CA9-0242AC120002'));
     }
+
+    public function testWithCustomMap()
+    {
+        // Test with the predefined random map
+        $customMap = ShortId::$MAP_RANDOM;
+
+        // Test encoding and decoding with custom map
+        $testNumbers = [0, 1, 62, 124, 1000, 999999];
+
+        foreach ($testNumbers as $number) {
+            $encoded = ShortId::fromNumber($number, $customMap);
+            $decoded = ShortId::get($encoded, $customMap);
+
+            $this->assertEquals($number, $decoded, "Failed to encode/decode $number with custom map");
+        }
+    }
+
+    public function testWithAlternateMaps()
+    {
+        // Test with MAP_ALTERNATE
+        $encoded = ShortId::fromNumber(100, ShortId::$MAP_ALTERNATE);
+        $decoded = ShortId::get($encoded, ShortId::$MAP_ALTERNATE);
+        $this->assertEquals(100, $decoded);
+
+        // Test with MAP_NUMBERS_FIRST
+        $encoded = ShortId::fromNumber(100, ShortId::$MAP_NUMBERS_FIRST);
+        $decoded = ShortId::get($encoded, ShortId::$MAP_NUMBERS_FIRST);
+        $this->assertEquals(100, $decoded);
+
+        // Test that different maps produce different encodings
+        $number = 999999;
+        $default = ShortId::fromNumber($number, ShortId::$MAP_DEFAULT);
+        $numbersFirst = ShortId::fromNumber($number, ShortId::$MAP_NUMBERS_FIRST);
+        $random = ShortId::fromNumber($number, ShortId::$MAP_RANDOM);
+
+        // MAP_DEFAULT and MAP_ALTERNATE only differ in uppercase/numbers order,
+        // so they produce same result for numbers that only use lowercase letters
+        // MAP_NUMBERS_FIRST should differ (numbers are at the start)
+        $this->assertNotEquals($default, $numbersFirst);
+
+        // MAP_RANDOM should differ from all others
+        $this->assertNotEquals($default, $random);
+        $this->assertNotEquals($numbersFirst, $random);
+    }
+
+    public function testFromHexWithCustomMap()
+    {
+        $customMap = ShortId::$MAP_RANDOM;
+
+        $encoded = ShortId::fromHex('3e', $customMap);
+        $decoded = ShortId::get($encoded, $customMap);
+
+        $this->assertEquals(62, $decoded);
+    }
 }

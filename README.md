@@ -10,68 +10,62 @@ Create short string IDs from numbers
 
 ## Description
 
-This library enables you to create a very short string from
-integer numbers.
+This library enables you to create a very short string from integer numbers.
 
 The basic usage is:
 
 ```php
 <?php
-$shortid = \ByJG\Utils\ShortId::fromNumber(81717788171667188198);
+$shortid = \ByJG\ShortId\ShortId::fromNumber(81717788171667188198);
 
 // Will write: Qi0yuM2uKwJb
 ```
 
-## Methods
+## Documentation
 
-- fromNumber($number, $map = null): Return a short id from a number
-- fromHex($hex, $map = null): Return a short id from a Hex value
-- fromUuid($uuid, $map = null): Return a short id from a UUID
-- fromRandom($min, $max, $map = null): Return a short id from a random number
-- get($shortid, $map = null): Return the Unique Integer Number from the short id (does not work with UUIDs)
-
-## Specify your own map
-
-The base of the short id is in the map definition.
-
-Basically, you can create your own sequence here.
-
-The library defines four by default:
-
-- $MAP_DEFAULT
-- $MAP_ALTERNATE
-- $MAP_NUMBERS_FIRST
-- $MAP_RANDOM
-
-The basic usage is:
-
-```php
-<?php
-$shortid = \ByJG\Utils\ShortId::fromNumber(
-    81717788171667188198,
-    \ByJG\Utils\ShortId::$MAP_NUMBERS_FIRST
-);
-
-// Will write: G8QokCSkAmz1
-```
+- [Getting Started](docs/getting-started.md)
+- [Methods](docs/methods.md)
+- [Custom Maps](docs/custom-maps.md)
 
 ## Installation
 
-```php
-composer require "byjg/php-shortid"
+```bash
+composer require "byjg/shortid"
 ```
 
-## Tests
+## Quick Start
 
 ```php
-vendor/bin/phpunit
+<?php
+use ByJG\ShortId\ShortId;
+
+// Create short ID from number
+$shortid = ShortId::fromNumber(1234567890);
+
+// Get the number back
+$number = ShortId::get($shortid);
+
+// Create from UUID
+$shortid = ShortId::fromUuid('092395A6-BC87-11ED-8CA9-0242AC120002');
+
+// Create from hex
+$shortid = ShortId::fromHex('3e');
+
+// Generate random short ID
+$shortid = ShortId::fromRandom();
+```
+
+## Running Tests
+
+```bash
+composer test
 ```
 
 ## Dependencies
 
-```mermaid  
-flowchart TD  
-    byjg/shortid  
+```mermaid
+flowchart TD
+    byjg/shortid
 ```
 
 ----

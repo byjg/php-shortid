@@ -27,7 +27,7 @@ class ShortId
         . "gZibO9RdznT1YIVsXwfkaxCNpr"
         . "J3chmel0G8";
 
-    public static function fromNumber(int $number, string $map = null): string
+    public static function fromNumber(int $number, ?string $map = null): string
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;
@@ -46,14 +46,14 @@ class ShortId
         return $result;
     }
 
-    public static function fromHex(string $hex, string $map = null): string
+    public static function fromHex(string $hex, ?string $map = null): string
     {
         $number = hexdec(str_replace('-', '', $hex));
 
         return self::fromNumber($number, $map);
     }
 
-    public static function fromUuid(string $hex, string $map = null): string
+    public static function fromUuid(string $hex, ?string $map = null): string
     {
         $numbers = unpack('L*', pack('h*', str_replace('-', '', $hex)));
 
@@ -66,14 +66,14 @@ class ShortId
         return $result;
     }
 
-    public static function fromRandom(int $min = 2147483647, int $max = 9223372036854775807, string $map = null): string
+    public static function fromRandom(int $min = 2147483647, int $max = 9223372036854775807, ?string $map = null): string
     {
         $number = rand($min, $max);
 
         return self::fromNumber($number, $map);
     }
 
-    public static function get(string $shortId, string $map = null): float|int
+    public static function get(string $shortId, ?string $map = null): float|int
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;

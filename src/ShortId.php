@@ -57,6 +57,10 @@ class ShortId
     {
         $numbers = unpack('L*', pack('h*', str_replace('-', '', $hex)));
 
+        if ($numbers === false) {
+            $numbers = [];
+        }
+
         $result = "";
 
         foreach ($numbers as $number) {

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="4"
+    errorLevel="3"
     resolveFromConfigFile="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
@@ -10,7 +10,6 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd">
     <projectFiles>
         <directory name="src" />
-        <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>

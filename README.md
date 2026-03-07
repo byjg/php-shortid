@@ -1,4 +1,10 @@
+---
+tags: [php]
+---
+
 # ShortID
+
+Create short string IDs from numbers
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml)
@@ -6,8 +12,6 @@
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-shortid/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-shortid.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-shortid.svg)](https://github.com/byjg/php-shortid/releases/)
-
-Create short string IDs from numbers
 
 ## Description
 
@@ -24,9 +28,9 @@ $shortid = \ByJG\ShortId\ShortId::fromNumber(81717788171667188198);
 
 ## Documentation
 
-- [Getting Started](docs/getting-started.md)
-- [Methods](docs/methods.md)
-- [Custom Maps](docs/custom-maps.md)
+- [Getting Started](getting-started)
+- [Methods](methods)
+- [Custom Maps](custom-maps)
 
 ## Installation
 

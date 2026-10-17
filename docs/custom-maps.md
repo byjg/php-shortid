@@ -107,7 +107,7 @@ You can create a completely custom character map:
 ```php
 use ByJG\ShortId\ShortId;
 
-// Create a custom map (must be 62 characters for base-62 encoding)
+// Create a custom map (its length is the base of the encoding)
 $myMap = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 // Use it
@@ -117,19 +117,17 @@ $number = ShortId::get($shortid, $myMap);
 
 ### Custom Map Requirements
 
-- Must contain exactly 62 unique characters
 - Each character must be unique (no duplicates)
-- Can use any ASCII characters
+- Any length: the number of characters is the base of the encoding (62 for the predefined maps)
+- Single-byte (ASCII) characters only, since the map is indexed by byte
 
 ### Generating Random Maps
 
-You can use the included `randommap.php` utility to generate a randomized character map:
+Shuffle the default character set once and store the result as your custom map:
 
-```bash
-php randommap.php
+```php
+echo str_shuffle(ShortId::$MAP_DEFAULT);
 ```
-
-This will output a shuffled version of the default character set that you can use as a custom map.
 
 ## Comparison of Maps
 
@@ -139,7 +137,7 @@ Here's how different maps encode the same number:
 |--------|-------------|-------------------|------------|
 | 0      | a           | 0                 | W          |
 | 1      | b           | 1                 | P          |
-| 62     | ab          | a0                | WP         |
+| 62     | ab          | 01                | WP         |
 | 999999 | bjme        | 19c4              | P4UL       |
 
 ## Use Cases

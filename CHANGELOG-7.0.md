@@ -37,3 +37,4 @@
 ## Housekeeping
 
 - `phpunit.xml.dist` renamed to `phpunit.xml`.
+- The `example.php` and `randommap.php` scripts were removed.

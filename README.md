@@ -23,9 +23,9 @@ The basic usage is:
 
 ```php
 <?php
-$shortid = \ByJG\ShortId\ShortId::fromNumber(81717788171667188198);
+$shortid = \ByJG\ShortId\ShortId::fromNumber(9223372036854775807);
 
-// Will write: Qi0yuM2uKwJb
+// Will write: hSifIaXiv9k
 ```
 
 ## Documentation

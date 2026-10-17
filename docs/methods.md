@@ -29,11 +29,11 @@ public static function fromNumber(int $number, ?string $map = null): string
 use ByJG\ShortId\ShortId;
 
 $shortid = ShortId::fromNumber(1234567890);
-echo $shortid; // Output: bjme
+echo $shortid; // Output: uFhIvb
 
 // With custom map
 $shortid = ShortId::fromNumber(1234567890, ShortId::$MAP_NUMBERS_FIRST);
-echo $shortid; // Output: 19c4
+echo $shortid; // Output: kv7yl1
 ```
 
 ## get()
@@ -62,11 +62,11 @@ This method does not work with UUIDs converted using `fromUuid()` because UUIDs 
 ```php
 use ByJG\ShortId\ShortId;
 
-$number = ShortId::get('bjme');
+$number = ShortId::get('uFhIvb');
 echo $number; // Output: 1234567890
 
 // With custom map
-$number = ShortId::get('19c4', ShortId::$MAP_NUMBERS_FIRST);
+$number = ShortId::get('kv7yl1', ShortId::$MAP_NUMBERS_FIRST);
 echo $number; // Output: 1234567890
 ```
 
@@ -104,7 +104,7 @@ echo $shortid; // Output: aab
 Convert a UUID to a short ID string.
 
 ```php
-public static function fromUuid(string $uuid, ?string $map = null): string
+public static function fromUuid(string $hex, ?string $map = null): string
 ```
 
 :::info
@@ -113,7 +113,7 @@ The UUID is split into multiple parts and each part is converted separately. Thi
 
 ### Parameters
 
-- `$uuid` (string): UUID string (with or without dashes)
+- `$hex` (string): UUID string (with or without dashes)
 - `$map` (string|null): Optional custom character map
 
 ### Returns

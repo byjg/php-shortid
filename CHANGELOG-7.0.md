@@ -3,9 +3,33 @@
 > **Status: in development.** This document tracks changes landing on the `7.0` branch.
 > Nothing here is released yet, and the contents may still change.
 
+## Bug Fixes
+
+- **`fromHex()` now throws a clear `InvalidArgumentException` for a value that does not fit
+  in an integer.** `hexdec()` returns a float above `7fffffffffffffff` (`PHP_INT_MAX`), and
+  `fromNumber(int)` then failed with a `TypeError` ("must be of type int, float given") that
+  did not say what was wrong. The message now names the limit and points to `fromUuid()` for
+  longer values. `7fffffffffffffff` and below are unchanged.
+- **`fromNumber()` and `get()` now use integer arithmetic, so every integer round-trips.** Both
+  divided or multiplied through a float, which has 53 bits of precision: above 2^53
+  `fromNumber()` produced a wrong short ID for many values (`fromNumber(PHP_INT_MAX)` returned
+  `hSifIaXiv9k`, which is 9223372036854775559) and `get()` returned an imprecise float.
+  `get(fromNumber(PHP_INT_MAX))` now returns `PHP_INT_MAX`, and `get()` always returns an `int`.
+- `get()` throws `InvalidArgumentException` for a short ID whose value is greater than
+  `PHP_INT_MAX`. It returned an imprecise float.
+
 ## Breaking Changes
 
-- None.
+- `fromHex()` throws `InvalidArgumentException` instead of `TypeError` for a hex value
+  greater than `7fffffffffffffff`. Code catching `TypeError` (or `Error`) for that case must
+  catch `InvalidArgumentException` instead.
+- **`fromNumber()` returns a different short ID for some numbers greater than 2^53**
+  (9007199254740992); numbers up to 2^53 are unchanged. The old ID was a wrong encoding — it did
+  not decode back to the number — but a short ID stored by 6.x for such a number will not match
+  the one 7.0 generates. `fromRandom()` is affected the same way, since its default range goes up
+  to `PHP_INT_MAX`.
+- `get()` is declared `: int` instead of `: float|int`, and throws `InvalidArgumentException`
+  where it returned a float. A subclass overriding `get()` must narrow its return type to `int`.
 
 ## Requirements
 

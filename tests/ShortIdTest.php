@@ -3,6 +3,7 @@
 namespace Tests;
 
 use ByJG\ShortId\ShortId;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -36,6 +37,55 @@ class ShortIdTest extends TestCase
         );
     }
 
+    public function testFromHexLargestValue()
+    {
+        $this->assertSame('hWifIaXiv9k', ShortId::fromHex('7fffffffffffffff'));
+        $this->assertSame(ShortId::fromNumber(PHP_INT_MAX), ShortId::fromHex('7fffffffffffffff'));
+    }
+
+    public function testFromHexValueTooLarge()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('fromUuid()');
+        ShortId::fromHex('8000000000000000');
+    }
+
+    public function testGetRoundTripsLargestInteger()
+    {
+        $this->assertSame(PHP_INT_MAX, ShortId::get(ShortId::fromNumber(PHP_INT_MAX)));
+        $this->assertSame(PHP_INT_MAX, ShortId::get(ShortId::fromHex('7fffffffffffffff')));
+    }
+
+    public function testGetRoundTripsLargeValues()
+    {
+        $values = [PHP_INT_MAX - 1, 2 ** 53 + 1, 2 ** 62, 62 ** 10];
+        for ($i = 0; $i < 100; $i++) {
+            $values[] = random_int(2 ** 53, PHP_INT_MAX);
+        }
+
+        foreach ($values as $value) {
+            $this->assertSame($value, ShortId::get(ShortId::fromNumber($value)), "Round trip of $value");
+            $this->assertSame($value, ShortId::get(ShortId::fromNumber($value, ShortId::$MAP_RANDOM), ShortId::$MAP_RANDOM));
+        }
+    }
+
+    public static function dataProviderTooLarge()
+    {
+        return [
+            'PHP_INT_MAX + 1' => ['iWifIaXiv9k'],
+            'PHP_INT_MAX + 62^10' => ['hWifIaXiv9l'],
+            'twelve digits' => ['aaaaaaaaaaab'],
+        ];
+    }
+
+    #[DataProvider('dataProviderTooLarge')]
+    public function testGetValueTooLarge(string $shortId)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than the largest integer');
+        ShortId::get($shortId);
+    }
+
     public static function dataProviderNumber()
     {
         return [
@@ -46,6 +96,11 @@ class ShortIdTest extends TestCase
             ['aA', 26*62],
             ['a0', 52*62],
             ['aab', 62*62],
+            // Above 2^53, where float arithmetic loses precision
+            ['NdmVYMvykxb', 2**60 + 12345],
+            ['Rx4pXbSumDb', 1234567890123456789],
+            ['eyJcrFyJPEf', 2**62],
+            ['hWifIaXiv9k', PHP_INT_MAX],
         ];
     }
 

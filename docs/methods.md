@@ -41,7 +41,7 @@ echo $shortid; // Output: kv7yl1
 Convert a short ID string back to its original number.
 
 ```php
-public static function get(string $shortId, ?string $map = null): float|int
+public static function get(string $shortId, ?string $map = null): int
 ```
 
 :::warning
@@ -55,7 +55,12 @@ This method does not work with UUIDs converted using `fromUuid()` because UUIDs 
 
 ### Returns
 
-- (int|float): The original number
+- (int): The original number
+
+### Throws
+
+- `InvalidArgumentException`: when the short ID decodes to a value greater than `PHP_INT_MAX`
+  (for example a short ID made by hand, or one longer than any `fromNumber()` output).
 
 ### Example
 
@@ -86,6 +91,12 @@ public static function fromHex(string $hex, ?string $map = null): string
 ### Returns
 
 - (string): The short ID representation
+
+### Throws
+
+- `InvalidArgumentException`: when the value does not fit in an integer, i.e. it is greater
+  than `7fffffffffffffff` (`PHP_INT_MAX` on 64-bit). Use `fromUuid()` for longer values such as
+  a UUID.
 
 ### Example
 
@@ -172,7 +183,10 @@ echo $shortid; // Output: random short ID from smaller range
 | Method         | Input       | Output   | Reversible          |
 |----------------|-------------|----------|---------------------|
 | `fromNumber()` | Integer     | Short ID | ✅ Yes (via `get()`) |
-| `fromHex()`    | Hexadecimal | Short ID | ✅ Yes (via `get()`) |
+| `fromHex()`    | Hexadecimal | Short ID | ✅ Yes (via `dechex(get())`)¹ |
 | `fromUuid()`   | UUID        | Short ID | ❌ No                |
 | `fromRandom()` | Range       | Short ID | ✅ Yes (via `get()`) |
 | `get()`        | Short ID    | Integer  | N/A                 |
+
+¹ `get()` returns the number, so `dechex()` gives the hex back without dashes or leading zeros.
+Only values up to `7fffffffffffffff` are accepted by `fromHex()`.

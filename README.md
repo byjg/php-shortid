@@ -25,7 +25,7 @@ The basic usage is:
 <?php
 $shortid = \ByJG\ShortId\ShortId::fromNumber(9223372036854775807);
 
-// Will write: hSifIaXiv9k
+// Will write: hWifIaXiv9k
 ```
 
 ## Documentation

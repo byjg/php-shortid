@@ -2,6 +2,8 @@
 
 namespace ByJG\ShortId;
 
+use InvalidArgumentException;
+
 class ShortId
 {
     public static string $MAP_DEFAULT =
@@ -38,7 +40,7 @@ class ShortId
 
         while ($number >= $size) {
             $mod = $number % $size;
-            $number = intval($number / $size);
+            $number = intdiv($number, $size);
             $result .= $map[$mod];
         }
         $result .= $map[$number];
@@ -49,6 +51,14 @@ class ShortId
     public static function fromHex(string $hex, ?string $map = null): string
     {
         $number = hexdec(str_replace('-', '', $hex));
+
+        // hexdec() returns a float once the value is greater than PHP_INT_MAX
+        if (!is_int($number)) {
+            throw new InvalidArgumentException(
+                "The hex value '$hex' does not fit in an integer (max " . dechex(PHP_INT_MAX) . "). "
+                . "Use fromUuid() for longer values."
+            );
+        }
 
         return self::fromNumber($number, $map);
     }
@@ -77,19 +87,25 @@ class ShortId
         return self::fromNumber($number, $map);
     }
 
-    public static function get(string $shortId, ?string $map = null): float|int
+    public static function get(string $shortId, ?string $map = null): int
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;
         }
 
         $base = strlen($map);
-        $order = 1;
         $result = 0;
 
-        for ($pos = 0; $pos < strlen($shortId); $pos++) {
-            $result += intval(strpos($map, $shortId[$pos])) * $order;
-            $order *= $base;
+        // The first character is the least significant digit, so read from the end. Integer
+        // arithmetic only: a float loses precision above 2^53.
+        for ($pos = strlen($shortId) - 1; $pos >= 0; $pos--) {
+            $digit = intval(strpos($map, $shortId[$pos]));
+            if ($result > intdiv(PHP_INT_MAX - $digit, $base)) {
+                throw new InvalidArgumentException(
+                    "The short id '$shortId' is greater than the largest integer (" . PHP_INT_MAX . ")."
+                );
+            }
+            $result = $result * $base + $digit;
         }
 
         return $result;

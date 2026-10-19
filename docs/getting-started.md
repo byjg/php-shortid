@@ -29,7 +29,7 @@ use ByJG\ShortId\ShortId;
 
 // Convert number to short ID
 $shortid = ShortId::fromNumber(1234567890);
-echo $shortid; // Output: bjme
+echo $shortid; // Output: uFhIvb
 
 // Convert back to number
 $number = ShortId::get($shortid);
@@ -53,7 +53,7 @@ This means each character can represent 62 different values, making the resultin
 | 0      | a        |
 | 1      | b        |
 | 62     | ab       |
-| 1000   | qa       |
+| 1000   | iq       |
 | 999999 | bjme     |
 
 ## Next Steps

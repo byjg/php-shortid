@@ -29,11 +29,11 @@ public static function fromNumber(int $number, ?string $map = null): string
 use ByJG\ShortId\ShortId;
 
 $shortid = ShortId::fromNumber(1234567890);
-echo $shortid; // Output: bjme
+echo $shortid; // Output: uFhIvb
 
 // With custom map
 $shortid = ShortId::fromNumber(1234567890, ShortId::$MAP_NUMBERS_FIRST);
-echo $shortid; // Output: 19c4
+echo $shortid; // Output: kv7yl1
 ```
 
 ## get()
@@ -41,7 +41,7 @@ echo $shortid; // Output: 19c4
 Convert a short ID string back to its original number.
 
 ```php
-public static function get(string $shortId, ?string $map = null): float|int
+public static function get(string $shortId, ?string $map = null): int
 ```
 
 :::warning
@@ -55,18 +55,23 @@ This method does not work with UUIDs converted using `fromUuid()` because UUIDs 
 
 ### Returns
 
-- (int|float): The original number
+- (int): The original number
+
+### Throws
+
+- `InvalidArgumentException`: when the short ID decodes to a value greater than `PHP_INT_MAX`
+  (for example a short ID made by hand, or one longer than any `fromNumber()` output).
 
 ### Example
 
 ```php
 use ByJG\ShortId\ShortId;
 
-$number = ShortId::get('bjme');
+$number = ShortId::get('uFhIvb');
 echo $number; // Output: 1234567890
 
 // With custom map
-$number = ShortId::get('19c4', ShortId::$MAP_NUMBERS_FIRST);
+$number = ShortId::get('kv7yl1', ShortId::$MAP_NUMBERS_FIRST);
 echo $number; // Output: 1234567890
 ```
 
@@ -87,6 +92,12 @@ public static function fromHex(string $hex, ?string $map = null): string
 
 - (string): The short ID representation
 
+### Throws
+
+- `InvalidArgumentException`: when the value does not fit in an integer, i.e. it is greater
+  than `7fffffffffffffff` (`PHP_INT_MAX` on 64-bit). Use `fromUuid()` for longer values such as
+  a UUID.
+
 ### Example
 
 ```php
@@ -104,7 +115,7 @@ echo $shortid; // Output: aab
 Convert a UUID to a short ID string.
 
 ```php
-public static function fromUuid(string $uuid, ?string $map = null): string
+public static function fromUuid(string $hex, ?string $map = null): string
 ```
 
 :::info
@@ -113,7 +124,7 @@ The UUID is split into multiple parts and each part is converted separately. Thi
 
 ### Parameters
 
-- `$uuid` (string): UUID string (with or without dashes)
+- `$hex` (string): UUID string (with or without dashes)
 - `$map` (string|null): Optional custom character map
 
 ### Returns
@@ -172,7 +183,10 @@ echo $shortid; // Output: random short ID from smaller range
 | Method         | Input       | Output   | Reversible          |
 |----------------|-------------|----------|---------------------|
 | `fromNumber()` | Integer     | Short ID | ✅ Yes (via `get()`) |
-| `fromHex()`    | Hexadecimal | Short ID | ✅ Yes (via `get()`) |
+| `fromHex()`    | Hexadecimal | Short ID | ✅ Yes (via `dechex(get())`)¹ |
 | `fromUuid()`   | UUID        | Short ID | ❌ No                |
 | `fromRandom()` | Range       | Short ID | ✅ Yes (via `get()`) |
 | `get()`        | Short ID    | Integer  | N/A                 |
+
+¹ `get()` returns the number, so `dechex()` gives the hex back without dashes or leading zeros.
+Only values up to `7fffffffffffffff` are accepted by `fromHex()`.

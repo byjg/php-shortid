@@ -2,6 +2,8 @@
 
 namespace ByJG\ShortId;
 
+use InvalidArgumentException;
+
 class ShortId
 {
     public static string $MAP_DEFAULT =
@@ -38,7 +40,7 @@ class ShortId
 
         while ($number >= $size) {
             $mod = $number % $size;
-            $number = intval($number / $size);
+            $number = intdiv($number, $size);
             $result .= $map[$mod];
         }
         $result .= $map[$number];
@@ -48,9 +50,18 @@ class ShortId
 
     public static function fromHex(string $hex, ?string $map = null): string
     {
-        $number = hexdec(str_replace('-', '', $hex));
+        // The size is checked before hexdec(), which returns a float above PHP_INT_MAX (and raises a notice
+        // since PHP 8.6). Like hexdec(), anything that isn't a hex digit is ignored.
+        $digits = strtolower(ltrim((string)preg_replace('/[^0-9a-f]/i', '', $hex), '0'));
+        $max = dechex(PHP_INT_MAX);
+        if (strlen($digits) > strlen($max) || (strlen($digits) === strlen($max) && strcmp($digits, $max) > 0)) {
+            throw new InvalidArgumentException(
+                "The hex value '$hex' does not fit in an integer (max $max). "
+                . "Use fromUuid() for longer values."
+            );
+        }
 
-        return self::fromNumber($number, $map);
+        return self::fromNumber((int)hexdec($digits), $map);
     }
 
     public static function fromUuid(string $hex, ?string $map = null): string
@@ -77,19 +88,25 @@ class ShortId
         return self::fromNumber($number, $map);
     }
 
-    public static function get(string $shortId, ?string $map = null): float|int
+    public static function get(string $shortId, ?string $map = null): int
     {
         if (empty($map)) {
             $map = ShortId::$MAP_DEFAULT;
         }
 
         $base = strlen($map);
-        $order = 1;
         $result = 0;
 
-        for ($pos = 0; $pos < strlen($shortId); $pos++) {
-            $result += intval(strpos($map, $shortId[$pos])) * $order;
-            $order *= $base;
+        // The first character is the least significant digit, so read from the end. Integer
+        // arithmetic only: a float loses precision above 2^53.
+        for ($pos = strlen($shortId) - 1; $pos >= 0; $pos--) {
+            $digit = intval(strpos($map, $shortId[$pos]));
+            if ($result > intdiv(PHP_INT_MAX - $digit, $base)) {
+                throw new InvalidArgumentException(
+                    "The short id '$shortId' is greater than the largest integer (" . PHP_INT_MAX . ")."
+                );
+            }
+            $result = $result * $base + $digit;
         }
 
         return $result;

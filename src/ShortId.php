@@ -50,17 +50,18 @@ class ShortId
 
     public static function fromHex(string $hex, ?string $map = null): string
     {
-        $number = hexdec(str_replace('-', '', $hex));
-
-        // hexdec() returns a float once the value is greater than PHP_INT_MAX
-        if (!is_int($number)) {
+        // The size is checked before hexdec(), which returns a float above PHP_INT_MAX (and raises a notice
+        // since PHP 8.6). Like hexdec(), anything that isn't a hex digit is ignored.
+        $digits = strtolower(ltrim((string)preg_replace('/[^0-9a-f]/i', '', $hex), '0'));
+        $max = dechex(PHP_INT_MAX);
+        if (strlen($digits) > strlen($max) || (strlen($digits) === strlen($max) && strcmp($digits, $max) > 0)) {
             throw new InvalidArgumentException(
-                "The hex value '$hex' does not fit in an integer (max " . dechex(PHP_INT_MAX) . "). "
+                "The hex value '$hex' does not fit in an integer (max $max). "
                 . "Use fromUuid() for longer values."
             );
         }
 
-        return self::fromNumber($number, $map);
+        return self::fromNumber((int)hexdec($digits), $map);
     }
 
     public static function fromUuid(string $hex, ?string $map = null): string

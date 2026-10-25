@@ -1,5 +1,6 @@
 ---
 sidebar_key: shortid
+sidebar_category: text-content
 tags: [php]
 ---
 

@@ -5,7 +5,7 @@ tags: [php]
 
 # ShortID
 
-Create short string IDs from numbers
+Turn numbers and UUIDs into short, URL-friendly strings, and back.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml)
@@ -14,6 +14,23 @@ Create short string IDs from numbers
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-shortid/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-shortid.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-shortid.svg)](https://github.com/byjg/php-shortid/releases/)
+
+## Why
+
+Sequential ids in URLs (`/order/1042`) are long, reveal how many records you have, and invite
+people to guess the next one. A UUID solves that but is 36 characters long.
+
+ShortId encodes the number (or the UUID) into a short string and decodes it back, with no
+database lookup:
+
+```php
+$id = ShortId::fromNumber(1234567890);   // short string
+ShortId::get($id);                       // 1234567890
+ShortId::fromUuid('092395A6-BC87-11ED-8CA9-0242AC120002');
+```
+
+Use your own alphabet ([custom maps](docs/custom-maps.md)) so the ids of your application are
+not the ones anybody else would generate.
 
 ## Description
 
